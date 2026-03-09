@@ -1,0 +1,16 @@
+🔒 100% LOCAL MODELS ONLY
+
+This LLM server uses ONLY local models - NO cloud APIs!
+
+✅ Complete Privacy - Your data never leaves your machine
+✅ No API Keys - Completely self-contained  
+✅ No Cloud - All processing on your hardware
+✅ Works Offline - No internet needed (after model download)
+
+Verified:
+- ✅ NO openai package
+- ✅ NO anthropic package  
+- ✅ NO cloud API clients
+- ✅ Only llama-cpp-python for local inference
+
+See docs/LOCAL_ONLY.md for complete details.
