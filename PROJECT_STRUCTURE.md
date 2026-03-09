@@ -21,16 +21,14 @@ llmServer/
 │   ├── test_server.py              # Test local server
 │   ├── test_server.bat             # Quick test (Windows)
 │   ├── test_remote.py              # Test from remote computer
-│   ├── setup_remote.ps1            # Automated setup wizard
-│   ├── get_ip.ps1                  # Find server IP address
-│   ├── ssh_connect.ps1             # SSH connection helper
+│   ├── verify_local_only.py        # Verify no cloud APIs
 │   └── build_executable.py         # Build standalone .exe
 │
 ├── client/                 # Client libraries and examples
 │   └── client_example.py           # Full-featured API client
 │
 ├── docs/                   # Documentation
-│   ├── REMOTE_ACCESS.md            # SSH & remote setup guide
+│   ├── LOCAL_ONLY.md               # Privacy & local-only info
 │   └── DEPLOYMENT.md               # Deployment checklist
 │
 └── models/                 # Model files (not included)
@@ -72,18 +70,7 @@ python scripts\test_server.py
 python scripts\test_remote.py 192.168.1.100
 ```
 
-### Remote Access Setup
 
-```powershell
-# Get server IP
-.\scripts\get_ip.ps1
-
-# Setup SSH and firewall
-.\scripts\setup_remote.ps1
-
-# SSH connection helper
-.\scripts\ssh_connect.ps1
-```
 
 ### Client Usage
 

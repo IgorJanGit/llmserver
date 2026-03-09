@@ -14,37 +14,8 @@ A standalone HTTP server for running Qwen 14B **completely locally** on your own
 
 📖 **See [docs/LOCAL_ONLY.md](docs/LOCAL_ONLY.md) for complete privacy & security details**
 
-## 🚀 Quick Start for Remote Access
+## � Documentation
 
-**On Server:**
-```powershell
-# 1. Setup (automated)
-.\scripts\setup_remote.ps1
-
-# 2. Get your IP address
-.\scripts\get_ip.ps1
-
-# 3. Start server in background
-python scripts\start_server_background.py
-```
-
-**From Any Computer:**
-```bash
-# Test connection (replace with your server IP)
-python scripts/test_remote.py 192.168.1.100
-
-# Or use the API
-curl http://192.168.1.100:8000/health
-```
-
-**Via SSH:**
-```bash
-ssh username@192.168.1.100
-cd C:\Users\Igorj\llmServer
-python main.py
-```
-
-📖 **Full remote access guide:** [docs/REMOTE_ACCESS.md](docs/REMOTE_ACCESS.md)  
 📋 **Deployment checklist:** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)  
 ⚡ **Quick start guide:** [QUICKSTART.md](QUICKSTART.md)  
 📁 **Project structure:** [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)  

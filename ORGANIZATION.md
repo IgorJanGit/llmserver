@@ -20,16 +20,14 @@ llmServer/
 │   ├── stop_server.py               - Stop server
 │   ├── test_server.py               - Test locally
 │   ├── test_remote.py               - Test remotely
-│   ├── get_ip.ps1                   - Find server IP
-│   ├── setup_remote.ps1             - Remote setup wizard
-│   ├── ssh_connect.ps1              - SSH helper
+│   ├── verify_local_only.py         - Verify no cloud APIs
 │   └── build_executable.py          - Build .exe
 │
 ├── 📂 client/              - Client libraries
 │   └── client_example.py            - Full API client
 │
 └── 📂 docs/                - Documentation
-    ├── REMOTE_ACCESS.md             - Remote access guide
+    ├── LOCAL_ONLY.md                - Privacy & local-only info
     └── DEPLOYMENT.md                - Deployment checklist
 ```
 
@@ -70,14 +68,7 @@ python scripts\test_server.py
 python scripts\test_remote.py 192.168.1.100
 ```
 
-**Remote Setup:**
-```powershell
-# Get IP address
-.\scripts\get_ip.ps1
 
-# Complete setup
-.\scripts\setup_remote.ps1
-```
 
 **Client Usage:**
 ```powershell

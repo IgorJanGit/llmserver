@@ -39,18 +39,7 @@
   ```
 - [ ] Note server IP address for remote access
 
-### 5. SSH Access (Optional)
 
-- [ ] Install OpenSSH Server:
-  ```powershell
-  Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-  ```
-- [ ] Start SSH service:
-  ```powershell
-  Start-Service sshd
-  Set-Service -Name sshd -StartupType 'Automatic'
-  ```
-- [ ] Configure SSH firewall (usually automatic)
 
 ## Testing
 
@@ -63,8 +52,7 @@
 
 ### Remote Testing
 
-- [ ] From another computer: `python test_remote.py [SERVER_IP]`
-- [ ] Test SSH: `ssh username@[SERVER_IP]`
+- [ ] From another computer: `python scripts/test_remote.py [SERVER_IP]`
 - [ ] Try API call with curl or Python requests
 - [ ] Verify firewall allows connections
 
@@ -93,7 +81,7 @@
 - [ ] Add API key authentication
 - [ ] Configure HTTPS/SSL
 - [ ] Set up rate limiting
-- [ ] Use strong SSH passwords or keys
+
 - [ ] Configure router port forwarding
 - [ ] Consider VPN instead of direct exposure
 - [ ] Regular security updates
@@ -133,9 +121,6 @@ python scripts/test_server.py
 
 # Remote
 python scripts/test_remote.py [SERVER_IP]
-
-# Get IP address
-.\scripts\get_ip.ps1
 ```
 
 ### View Logs
@@ -167,7 +152,6 @@ Get-Content server_output.log -Wait
 ### Can't Connect Remotely
 - [ ] Verify server is running: `python test_server.py`
 - [ ] Check firewall rules: `Get-NetFirewallRule -Name "QwenLLMServer"`
-- [ ] Verify IP address: `.\get_ip.ps1`
 - [ ] Test from server first: `curl http://localhost:8000/health`
 - [ ] Ping server from remote computer
 
@@ -181,6 +165,6 @@ Get-Content server_output.log -Wait
 ## Support
 
 - Documentation: See README.md
-- Remote Access: See REMOTE_ACCESS.md
-- Test Scripts: Use test_server.py and test_remote.py
+- Privacy/Local-Only: See docs/LOCAL_ONLY.md
+- Test Scripts: Use scripts/test_server.py and scripts/test_remote.py
 - Configuration: Edit config.json

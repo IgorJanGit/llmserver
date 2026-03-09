@@ -49,17 +49,7 @@ Or run test:
 python scripts/test_server.py
 ```
 
-## 🌐 Remote Access Setup
-
-### Enable Remote Connections
-
-```powershell
-# 1. Find your server IP
-.\scripts\get_ip.ps1
-
-# 2. Configure firewall & SSH
-.\scripts\setup_remote.ps1
-```
+## 🌐 Remote Access
 
 ### Test from Another Computer
 
@@ -78,6 +68,8 @@ python client/client_example.py --server 192.168.1.100 --interactive
 python client/client_example.py --server 192.168.1.100 --prompt "Hello!"
 ```
 
+**Note:** For SSH/firewall setup, use your existing SSH server configuration.
+
 ## 📁 Project Layout
 
 ```
@@ -92,8 +84,7 @@ llmServer/
 │   ├── stop_server.py                # Stop background
 │   ├── test_server.py                # Test locally
 │   ├── test_remote.py                # Test remotely
-│   ├── get_ip.ps1                    # Find your IP
-│   ├── setup_remote.ps1              # Remote setup
+│   ├── verify_local_only.py          # Verify no cloud APIs
 │   └── build_executable.py           # Build .exe
 │
 ├── client/
