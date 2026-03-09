@@ -1,6 +1,7 @@
 """
-LLM Server - A local model server for Qwen 14B
+LLM Server - A local model server supporting multiple models
 Can be packaged as a standalone executable
+Supports: Qwen, Llama 3.1, and other GGUF models
 """
 
 import os
@@ -82,8 +83,7 @@ def load_model():
     if not Path(model_path).exists():
         raise FileNotFoundError(
             f"Model not found at {model_path}\n"
-            f"Please download Qwen 14B GGUF model and place it in the models/ directory.\n"
-            f"Download from: https://huggingface.co/Qwen/Qwen-14B-Chat-GGUF"
+            f"Please download a GGUF model or check your config.json path."
         )
     
     print(f"Loading model from {model_path}...")
@@ -98,8 +98,8 @@ def load_model():
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="LLM Server - Qwen 14B",
-    description="HTTP API for local Qwen 14B model completions",
+    title="LLM Server - Local Models",
+    description="HTTP API for local LLM model completions (supports Qwen, Llama, etc.)",
     version="1.0.0"
 )
 
@@ -140,21 +140,37 @@ class CompletionResponse(BaseModel):
     model: str = "qwen-14b"
     usage: Optional[Dict[str, Any]] = None
 
-def format_qwen_chat(messages: List[ChatMessage]) -> str:
-    """Format messages for Qwen chat template"""
-    formatted = ""
+def format_chat_prompt(messages: List[ChatMessage], model_path: str = "") -> str:
+    """Format messages for appropriate chat template based on model"""
     
-    for msg in messages:
-        if msg.role == "system":
-            formatted += f"<|im_start|>system\n{msg.content}<|im_end|>\n"
-        elif msg.role == "user":
-            formatted += f"<|im_start|>user\n{msg.content}<|im_end|>\n"
-        elif msg.role == "assistant":
-            formatted += f"<|im_start|>assistant\n{msg.content}<|im_end|>\n"
+    # Detect model type from path
+    model_name = model_path.lower()
     
-    # Add the assistant prompt to continue generation
-    formatted += "<|im_start|>assistant\n"
-    return formatted
+    # Llama 3.1 format
+    if "llama" in model_name or "sha256" in model_name:
+        formatted = ""
+        for msg in messages:
+            if msg.role == "system":
+                formatted += f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{msg.content}<|eot_id|>"
+            elif msg.role == "user":
+                formatted += f"<|start_header_id|>user<|end_header_id|>\n\n{msg.content}<|eot_id|>"
+            elif msg.role == "assistant":
+                formatted += f"<|start_header_id|>assistant<|end_header_id|>\n\n{msg.content}<|eot_id|>"
+        formatted += "<|start_header_id|>assistant<|end_header_id|>\n\n"
+        return formatted
+    
+    # Qwen format (default)
+    else:
+        formatted = ""
+        for msg in messages:
+            if msg.role == "system":
+                formatted += f"<|im_start|>system\n{msg.content}<|im_end|>\n"
+            elif msg.role == "user":
+                formatted += f"<|im_start|>user\n{msg.content}<|im_end|>\n"
+            elif msg.role == "assistant":
+                formatted += f"<|im_start|>assistant\n{msg.content}<|im_end|>\n"
+        formatted += "<|im_start|>assistant\n"
+        return formatted
 
 async def local_completion(request: CompletionRequest) -> CompletionResponse:
     """Handle local model completion"""
@@ -165,8 +181,8 @@ async def local_completion(request: CompletionRequest) -> CompletionResponse:
         )
     
     try:
-        # Format the prompt
-        prompt = format_qwen_chat(request.messages)
+        # Format the prompt based on model type
+        prompt = format_chat_prompt(request.messages, config.get("model_path", ""))
         
         # Run inference in thread pool to avoid blocking
         loop = asyncio.get_event_loop()
